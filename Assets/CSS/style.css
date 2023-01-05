@@ -18,6 +18,10 @@ header h1 {
     margin: 15px 0;
 }
 
+main {
+    display: flex;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -58,4 +62,22 @@ header h1 {
     height: 2px;
     background-color: grey;
     margin-top: 10px;
+}
+
+.results-showcase {
+    border: 2px solid black;
+    margin: 20px 10px 0 20px;
+    width: 70%;
+}
+
+.results-showcase .current-day {
+    border: 1px solid grey;
+    margin: 5px 5px;
+    height: 300px;
+}
+
+.results-showcase .five-day-forecast {
+    border: 1px solid grey;
+    margin: 10px 5px;
+    height: 300px;
 }
