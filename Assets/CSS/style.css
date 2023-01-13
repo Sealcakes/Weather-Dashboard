@@ -65,7 +65,6 @@ main {
 }
 
 .results-showcase {
-    border: 2px solid black;
     margin: 20px 10px 0 20px;
     width: 70%;
 }
@@ -77,7 +76,38 @@ main {
 }
 
 .results-showcase .five-day-forecast {
-    border: 1px solid grey;
     margin: 10px 5px;
     height: 300px;
+}
+
+#city-name {
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+    font-weight: 600;
+    margin: 10px 0 0 15px;
+}
+
+#current-weather-icon {
+    height: 50px;
+}
+
+#current-temp {
+    margin: 40px 0 0 15px;
+    font-size: 24px;
+}
+
+#current-wind {
+    margin: 40px 0 0 15px;
+    font-size: 24px;
+}
+
+#current-humidity {
+    margin: 40px 0 0 15px;
+    font-size: 24px;
+}
+
+.five-day-forecast {
+    display: flex;
+    justify-content: space-between;
 }
