@@ -5,6 +5,12 @@ var today = dayjs().format('MM/DD/YYYY');
 $('#city-search-submit').click(function(event) {
     event.preventDefault();
 
+    document.querySelector('.forecast-5').innerHTML = '';
+    document.querySelector('.forecast-13').innerHTML = '';
+    document.querySelector('.forecast-21').innerHTML = '';
+    document.querySelector('.forecast-29').innerHTML = '';
+    document.querySelector('.forecast-37').innerHTML = '';
+
     var citySearchInput = $('#city-search').val();
     
     if (!searchHistory) {
@@ -106,7 +112,7 @@ function getWeatherForecast(lat, lon) {
                 forecastHumidity.textContent = 'Humidity: ' + response.list[i].main.humidity + '%';
                 forecastHumidity.className = 'forecast-humidity';
 
-                document.querySelector('.forcast-'+ [i]).append(date, forecastWeatherIconImg, forecastTemp, forecastWindSpeed, forecastHumidity);
+                document.querySelector('.forecast-'+ [i]).append(date, forecastWeatherIconImg, forecastTemp, forecastWindSpeed, forecastHumidity);
             }
         })
         .catch(err => console.error(err))
