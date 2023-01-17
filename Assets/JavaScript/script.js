@@ -1,5 +1,5 @@
 var today = dayjs().format('MM/DD/YYYY');
-
+var searchHistory = [];
 
 // Click button to search for input text
 $('#city-search-submit').click(function(event) {
@@ -13,13 +13,12 @@ $('#city-search-submit').click(function(event) {
 
     var citySearchInput = $('#city-search').val();
     
-    if (!searchHistory) {
-        var searchHistory = [];
-    }
+
     searchHistory.push(citySearchInput);
     localStorage.setItem('cities', JSON.stringify(searchHistory));
     createSearchHistory();
     getGeoLocation(citySearchInput);
+
 })
 
 
@@ -131,4 +130,12 @@ function createSearchHistory() {
         document.querySelector('.recent-search-list').append(citySearchHistoryBtn);
     }) 
 
+    $('.search-history-btns').click(function(event) {
+        event.preventDefault();
+
+        var citySearch = this.textContent;
+        getGeoLocation(citySearch);
+    })
 }
+
+createSearchHistory();
