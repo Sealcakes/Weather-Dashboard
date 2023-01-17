@@ -1,15 +1,23 @@
 var today = dayjs().format('MM/DD/YYYY');
 
 
+// Click button to search for input text
 $('#city-search-submit').click(function(event) {
     event.preventDefault();
 
     var citySearchInput = $('#city-search').val();
+    
+    if (!searchHistory) {
+        var searchHistory = [];
+    }
+    searchHistory.push(citySearchInput);
+    localStorage.setItem('cities', JSON.stringify(searchHistory));
+    createSearchHistory();
     getGeoLocation(citySearchInput);
 })
 
 
-
+// Function to get the latitude and longitude of the requested city
 function getGeoLocation(city) {
     
     fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=dc7b400a7fd4369b06a82b6599dd0826')
@@ -27,7 +35,7 @@ function getGeoLocation(city) {
         .catch(err => console.error(err));
 }
 
-
+// Function that gets the current day's weather using the lat/lon
 function getCurrentWeather(lat, lon) {
 
     fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=dc7b400a7fd4369b06a82b6599dd0826&units=imperial')
@@ -64,6 +72,7 @@ function getCurrentWeather(lat, lon) {
         .catch(err => console.error(err));
 }
 
+// Function that gets the 5 day weather forecast using the lat/lon
 function getWeatherForecast(lat, lon) {
 
     fetch('https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=dc7b400a7fd4369b06a82b6599dd0826&units=imperial')
@@ -101,4 +110,19 @@ function getWeatherForecast(lat, lon) {
             }
         })
         .catch(err => console.error(err))
+}
+
+function createSearchHistory() {
+    
+    var storedCities = localStorage.getItem('cities');
+    var existingCities = storedCities ? JSON.parse(storedCities) : [];
+
+    existingCities.forEach(function(city) {
+        var citySearchHistoryBtn = document.createElement('Button');
+        citySearchHistoryBtn.className = "search-history-btns";
+        citySearchHistoryBtn.textContent = city;
+
+        document.querySelector('.recent-search-list').append(citySearchHistoryBtn);
+    }) 
+
 }
