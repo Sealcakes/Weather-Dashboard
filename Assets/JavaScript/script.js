@@ -19,9 +19,11 @@ $('#city-search-submit').click(function(event) {
     console.log(searchHistory);
     localStorage.setItem('cities', JSON.stringify(searchHistory));
     
-    if (!showHistory) {
-        createSearchHistory();
-    }
+    var citySearchHistoryBtn = document.createElement('Button');
+    citySearchHistoryBtn.className = "search-history-btns";
+    citySearchHistoryBtn.textContent = citySearchInput;
+
+    document.querySelector('.recent-search-list').append(citySearchHistoryBtn);
 
     getGeoLocation(citySearchInput);
 
@@ -146,4 +148,6 @@ function createSearchHistory() {
     showHistory = true;
 }
 
-createSearchHistory();
+if (!showHistory) {
+    createSearchHistory();
+}
