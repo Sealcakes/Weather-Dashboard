@@ -33,7 +33,7 @@ $('#city-search-submit').click(function(event) {
 // Function to get the latitude and longitude of the requested city
 function getGeoLocation(city) {
     
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=dc7b400a7fd4369b06a82b6599dd0826')
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=dc7b400a7fd4369b06a82b6599dd0826')
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -56,7 +56,7 @@ function getCurrentWeather(lat, lon) {
         .then(function(response) {
             console.log(response);
             
-            var currentWeatherIcon = 'http://openweathermap.org/img/wn/' + response.weather[0].icon + '@2x.png';
+            var currentWeatherIcon = 'https://openweathermap.org/img/wn/' + response.weather[0].icon + '@2x.png';
             var currentWeatherIconImg = document.createElement('img');
             currentWeatherIconImg.setAttribute('src', currentWeatherIcon);
             currentWeatherIconImg.id = 'current-weather-icon';
@@ -102,7 +102,7 @@ function getWeatherForecast(lat, lon) {
                 date.textContent = futureDate;
                 date.className = 'date';
 
-                var forecastWeatherIcon = 'http://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
+                var forecastWeatherIcon = 'https://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
                 var forecastWeatherIconImg = document.createElement('img');
                 forecastWeatherIconImg.setAttribute('src', forecastWeatherIcon);
                 forecastWeatherIconImg.className = 'forecast-weather-icon';
