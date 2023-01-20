@@ -28,6 +28,12 @@ $('#city-search-submit').click(function(event) {
     $('.search-history-btns').click(function(event) {
         event.preventDefault();
 
+        document.querySelector('.forecast-5').innerHTML = '';
+        document.querySelector('.forecast-13').innerHTML = '';
+        document.querySelector('.forecast-21').innerHTML = '';
+        document.querySelector('.forecast-29').innerHTML = '';
+        document.querySelector('.forecast-37').innerHTML = '';
+
         var citySearch = this.textContent;
         getGeoLocation(citySearch);
     })
