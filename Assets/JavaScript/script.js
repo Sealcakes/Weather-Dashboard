@@ -1,5 +1,6 @@
 var today = dayjs().format('MM/DD/YYYY');
 var searchHistory = [];
+var showHistory = false;
 
 // Click button to search for input text
 $('#city-search-submit').click(function(event) {
@@ -13,10 +14,15 @@ $('#city-search-submit').click(function(event) {
 
     var citySearchInput = $('#city-search').val();
     
-
+    console.log(citySearchInput);
     searchHistory.push(citySearchInput);
+    console.log(searchHistory);
     localStorage.setItem('cities', JSON.stringify(searchHistory));
-    createSearchHistory();
+    
+    if (!showHistory) {
+        createSearchHistory();
+    }
+
     getGeoLocation(citySearchInput);
 
 })
@@ -136,6 +142,8 @@ function createSearchHistory() {
         var citySearch = this.textContent;
         getGeoLocation(citySearch);
     })
+
+    showHistory = true;
 }
 
 createSearchHistory();
