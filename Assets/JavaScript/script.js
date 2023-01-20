@@ -25,6 +25,13 @@ $('#city-search-submit').click(function(event) {
 
     document.querySelector('.recent-search-list').append(citySearchHistoryBtn);
 
+    $('.search-history-btns').click(function(event) {
+        event.preventDefault();
+
+        var citySearch = this.textContent;
+        getGeoLocation(citySearch);
+    })
+
     getGeoLocation(citySearchInput);
 
 })
