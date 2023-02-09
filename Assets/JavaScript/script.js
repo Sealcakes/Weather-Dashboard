@@ -6,12 +6,8 @@ var showHistory = false;
 $('#city-search-submit').click(function(event) {
     event.preventDefault();
 
-    document.querySelector('.forecast-5').innerHTML = '';
-    document.querySelector('.forecast-13').innerHTML = '';
-    document.querySelector('.forecast-21').innerHTML = '';
-    document.querySelector('.forecast-29').innerHTML = '';
-    document.querySelector('.forecast-37').innerHTML = '';
-
+    clearForecast();
+    
     var citySearchInput = $('#city-search').val();
     
     console.log(citySearchInput);
@@ -28,12 +24,8 @@ $('#city-search-submit').click(function(event) {
     $('.search-history-btns').click(function(event) {
         event.preventDefault();
 
-        document.querySelector('.forecast-5').innerHTML = '';
-        document.querySelector('.forecast-13').innerHTML = '';
-        document.querySelector('.forecast-21').innerHTML = '';
-        document.querySelector('.forecast-29').innerHTML = '';
-        document.querySelector('.forecast-37').innerHTML = '';
-
+        clearForecast();
+        
         var citySearch = this.textContent;
         getGeoLocation(citySearch);
     })
@@ -54,7 +46,7 @@ function getGeoLocation(city) {
             var currentCityLat = data[0].lat;
             var currentCityLon = data[0].lon;
 
-            document.querySelector('.current-day').innerHTML = '';
+            
             getCurrentWeather(currentCityLat, currentCityLon);
             getWeatherForecast(currentCityLat, currentCityLon);
         })
@@ -64,11 +56,14 @@ function getGeoLocation(city) {
 // Function that gets the current day's weather using the lat/lon
 function getCurrentWeather(lat, lon) {
 
+
     fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=dc7b400a7fd4369b06a82b6599dd0826&units=imperial')
         .then(response => response.json())
         .then(function(response) {
             console.log(response);
             
+            
+
             var currentWeatherIcon = 'https://openweathermap.org/img/wn/' + response.weather[0].icon + '@2x.png';
             var currentWeatherIconImg = document.createElement('img');
             currentWeatherIconImg.setAttribute('src', currentWeatherIcon);
@@ -90,6 +85,7 @@ function getCurrentWeather(lat, lon) {
             currentHumidity.textContent = 'Humidity: ' + response.main.humidity + '%';
             currentHumidity.id = 'current-humidity';
 
+            document.querySelector('.current-day').innerHTML = '';
             document.querySelector('.current-day').append(cityName, currentTemp, currentWindSpeed, currentHumidity);
             document.querySelector('#city-name').appendChild(currentWeatherIconImg);
 
@@ -106,8 +102,12 @@ function getWeatherForecast(lat, lon) {
         .then(function(response) {
             console.log(response);
             var counter = 0;
+
+            clearForecast();
+
             for (var i = 5; i < response.list.length; i += 8) {
                 counter++
+
 
                 futureDate = dayjs(today).add(counter, 'day').format('MM/DD/YYYY');
 
@@ -132,12 +132,13 @@ function getWeatherForecast(lat, lon) {
                 forecastHumidity.textContent = 'Humidity: ' + response.list[i].main.humidity + '%';
                 forecastHumidity.className = 'forecast-humidity';
 
-                document.querySelector('.forecast-'+ [i]).append(date, forecastWeatherIconImg, forecastTemp, forecastWindSpeed, forecastHumidity);
+                document.querySelector('.forecast-'+ counter).append(date, forecastWeatherIconImg, forecastTemp, forecastWindSpeed, forecastHumidity);
             }
         })
         .catch(err => console.error(err))
 }
 
+// Creates the search history using local storage
 function createSearchHistory() {
     
     var storedCities = localStorage.getItem('cities');
@@ -159,6 +160,15 @@ function createSearchHistory() {
     })
 
     showHistory = true;
+}
+
+// Clears the HTML content from the 5 day forecast so the new forecast can take its place
+function clearForecast() {
+    document.querySelector('.forecast-1').innerHTML = '';
+    document.querySelector('.forecast-2').innerHTML = '';
+    document.querySelector('.forecast-3').innerHTML = '';
+    document.querySelector('.forecast-4').innerHTML = '';
+    document.querySelector('.forecast-5').innerHTML = '';
 }
 
 if (!showHistory) {
